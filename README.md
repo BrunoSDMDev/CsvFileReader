@@ -15,7 +15,7 @@
 
 ## Descrição do projeto 
 <p align="justify">
- Projeto criado durante o curso <strong> Ada - Santander Coders 2023 </strong>.
+ Projeto criado durante o curso <strong> Ada - Santander Coders 2023</strong>.
 <br>
 Como funciona?
 <br>
