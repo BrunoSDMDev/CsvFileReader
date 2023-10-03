@@ -1,4 +1,5 @@
-# <h1 align="center"> CSV_FILE_READER</h1>
+
+# <h1 align="center"> CsvFileReader </h1>
 ![GitHub repo size](https://img.shields.io/github/repo-size/PedroQueiroz1/CsvFileReader?style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/PedroQueiroz1/CsvFileReader?style=plastic)
 
