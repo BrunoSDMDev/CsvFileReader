@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /*
 Realizar a leitura de arquivos CSV com os dados de jogos do campeonato brasileiro entre 2003 e 2022 e trazer os seguintes dados:
@@ -50,10 +51,10 @@ public class Main {
             Integer partidaId = Integer.parseInt(partidaIdStr);
             Integer rodada = Integer.parseInt(rodadaStr);
 
-            Jogador jogador = new Jogador(atleta,numCamisa,posicao);
+            Jogador jogador = new Jogador(atleta, numCamisa, posicao);
             Partida partida = new Partida(partidaId, rodada, clube, cartao, jogador, minuto);
 
-            partidas.add(partida); // ta tudo armazenado aqui, do arquivo: campeonato-brasileiro-cartoes.csv só utilizar para as consultas.
+            partidas.add(partida);
         }
 
         Jogador jogadorMaisCartaoAmarelo = maisCartaoAmarelo(partidas);
@@ -66,11 +67,25 @@ public class Main {
     // Jogar os métodos abaixo para a classe utils.Consulta<<<
 
     public static Jogador maisCartaoAmarelo(List<Partida> partidas) {
-
+        return partidas.stream()
+                .filter(partida -> "\"Amarelo\"".equals(partida.getCartao()))
+                .collect(Collectors.groupingBy(Partida::getJogador, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
     public static Jogador maisCartaoVermelho(List<Partida> partidas) {
-
+        return partidas.stream()
+                .filter(partida -> "\"Vermelho\"".equals(partida.getCartao()))
+                .collect(Collectors.groupingBy(Partida::getJogador, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
 
