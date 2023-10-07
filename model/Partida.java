@@ -1,32 +1,20 @@
 package model;
 
 public class Partida {
-    private DetalhesPartida detalhesPartida;
-    private EstatisticasPartida estatisticasPartida;
     private Integer id;
     private Integer rodada;
-    private Time time;
+    private String clube;
+    private String cartao;
     private Jogador jogador;
-    private Integer minute;
-    private TipoGol tipoGol;
+    private String minuto;
 
-    public Partida(DetalhesPartida detalhesPartida, EstatisticasPartida estatisticasPartida, Integer id, Integer rodada, Time time, Jogador jogador, Integer minute, TipoGol tipoGol) {
-        this.detalhesPartida = detalhesPartida;
-        this.estatisticasPartida = estatisticasPartida;
+    public Partida(Integer id, Integer rodada, String clube, String cartao, Jogador jogador, String minuto) {
         this.id = id;
         this.rodada = rodada;
-        this.time = time;
+        this.clube = clube;
+        this.cartao = cartao;
         this.jogador = jogador;
-        this.minute = minute;
-        this.tipoGol = tipoGol;
-    }
-
-    public DetalhesPartida getDetalhesPartida() {
-        return detalhesPartida;
-    }
-
-    public EstatisticasPartida getEstatisticasPartida() {
-        return estatisticasPartida;
+        this.minuto = minuto;
     }
 
     public Integer getId() {
@@ -37,19 +25,20 @@ public class Partida {
         return rodada;
     }
 
-    public Time getTime() {
-        return time;
+    public String getClube() {
+        return clube;
+    }
+
+    public String getCartao() {
+        return cartao;
     }
 
     public Jogador getJogador() {
         return jogador;
     }
 
-    public Integer getMinute() {
-        return minute;
+    public String getMinuto() {
+        return minuto;
     }
 
-    public TipoGol getTipoGol() {
-        return tipoGol;
-    }
 }
