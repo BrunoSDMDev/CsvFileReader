@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Partida {
     private Integer id;
     private Integer rodada;
@@ -7,6 +9,7 @@ public class Partida {
     private String cartao;
     private Jogador jogador;
     private String minuto;
+    private int gols;
 
     public Partida(Integer id, Integer rodada, String clube, String cartao, Jogador jogador, String minuto) {
         this.id = id;
@@ -41,4 +44,7 @@ public class Partida {
         return minuto;
     }
 
+    public int getGols() {
+        return gols;
+    }
 }

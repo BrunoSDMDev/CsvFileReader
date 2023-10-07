@@ -25,7 +25,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        List<String> linhasCSV = LeitorArquivo.lerArquivoCSV();
+        List<String> linhasCSV = LeitorArquivo.lerArquivoCSVGols();
         List<Partida> partidas = new ArrayList<>();
 
         boolean ignorarCabecalho = true;
@@ -38,7 +38,9 @@ public class Main {
             }
 
             String[] campos = linha.split(",");
-
+            if(campos.length < 8) {
+                continue;
+            }
             String partidaIdStr = campos[0].replace("\"", "");;
             String rodadaStr = campos[1].replace("\"", "");;
             String clube = campos[2];
@@ -47,6 +49,7 @@ public class Main {
             String numCamisa = campos[5];
             String posicao = campos[6];
             String minuto = campos[7];
+
 
             Integer partidaId = Integer.parseInt(partidaIdStr);
             Integer rodada = Integer.parseInt(rodadaStr);
@@ -57,11 +60,14 @@ public class Main {
             partidas.add(partida);
         }
 
-        Jogador jogadorMaisCartaoAmarelo = maisCartaoAmarelo(partidas);
-        System.out.println("Mais cartões amarelos: " + jogadorMaisCartaoAmarelo.getNome());
+//        Jogador jogadorMaisCartaoAmarelo = maisCartaoAmarelo(partidas);
+//        System.out.println("Mais cartões amarelos: " + jogadorMaisCartaoAmarelo.getNome());
+//
+//        Jogador jogadorMaisCartaoVermelho = maisCartaoVermelho(partidas);
+//        System.out.println("Mais cartões vermelhos: " + jogadorMaisCartaoVermelho.getNome());
 
-        Jogador jogadorMaisCartaoVermelho = maisCartaoVermelho(partidas);
-        System.out.println("Mais cartões vermelhos: " + jogadorMaisCartaoVermelho.getNome());
+        Jogador jogadorMaisGols = maisGols(partidas);
+        System.out.println("Mais gols: " + jogadorMaisGols);
     }
 
     // Jogar os métodos abaixo para a classe utils.Consulta<<<
@@ -89,9 +95,16 @@ public class Main {
     }
 
 
-    public static Jogador maisGols(){
-        return new Jogador(); // desfazer construtor vazio após completar essa linha.
-    }
+    public static Jogador maisGols(List<Partida> partidas) {
+        return partidas.stream()
+                .collect(Collectors.groupingBy(Partida::getJogador, Collectors.summingInt(Partida::getGols)))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+    } // desfazer construtor vazio após completar essa linha.
+
 
     public static Jogador maisGolsPenaltis() {
         return new Jogador(); // desfazer construtor vazio após completar essa linha.
