@@ -2,8 +2,10 @@ package utils;
 
 import javaNIO.LeitorArquivo;
 import model.Jogador;
+import model.Partida;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Impressora {
@@ -27,51 +29,114 @@ public class Impressora {
         System.out.println("Jogador com mais gols " + tipo + ": " + jogadorMaisGols.getKey());
     }
 
-//       ****************************************
-public static void imprimirPartidaComMaiorPlacar() throws IOException {
-    List<String> linhasCSV = LeitorArquivo.lerArquivoCSVFull();
-    Map<String, Integer> qtdGolsPorPartida = new HashMap<>();
-    varrerArquivoCSVFull(qtdGolsPorPartida);
+    public static void imprimirPlacarPartidaComMaisGols() throws IOException {
+        Map<String, Integer> qtdGols = new HashMap<>();
+        varrerArquivoCSVFull(qtdGols);
 
-    Map.Entry<String, Integer> partidaComMaisGols = null;
+        Map.Entry<String, Integer> partidaMaisGols = Collections.max(qtdGols.entrySet(),
+                Comparator.comparingInt(Map.Entry::getValue));
 
-    boolean ignorarCabecalho = true;
-    int maxGols = 0;
-    String partidaMaxGols = "";
+        System.out.println("Placar da partida com mais gols " + partidaMaisGols.getKey());
+    }
 
-    for (String linha : linhasCSV) {
+    public static void imprimirTimeMaisVitoriaAno(String ano) throws IOException {
+        Map<String, Integer> qtdVitorias = new HashMap<>();
+        varrerArquivoCSVFull2(qtdVitorias, ano);
 
-        if (ignorarCabecalho) {
-            ignorarCabecalho = false;
-            continue;
-        }
+        Map.Entry<String, Integer> timeMaisVitoria = Collections.max(qtdVitorias.entrySet(),
+                Comparator.comparingInt(Map.Entry::getValue));
 
-        String[] campos = linha.split(",");
+        System.out.println("Time com mais vitórias em " + ano + " " + timeMaisVitoria.getKey());
+    }
 
-        Integer mandantePlacar = 0;
-        if (!campos[6].replace("\"", "").isEmpty() && campos[6].replace("\"", "").matches("\\d+")) {
-            mandantePlacar = Integer.parseInt(campos[6].replace("\"", ""));
-        }
+    private static void varrerArquivoCSVFull2(Map<String, Integer> qtdVitorias, String ano) throws IOException {
+        List<String> linhasCSV = LeitorArquivo.lerArquivoCSVFull();
+        boolean ignorarCabecalho = true;
 
-        Integer visitantePlacar = 0;
-        if (!campos[7].replace("\"", "").isEmpty() && campos[7].replace("\"", "").matches("\\d+")) {
-            visitantePlacar = Integer.parseInt(campos[7].replace("\"", ""));
-        }
+        for (String linha : linhasCSV) {
 
-        if (mandantePlacar != null && visitantePlacar != null) {
-            Integer totalGols = mandantePlacar + visitantePlacar;
-            if (totalGols > maxGols) {
-                maxGols = totalGols;
-                partidaMaxGols = linha;
+            if (ignorarCabecalho) {
+                ignorarCabecalho = false;
+                continue;
+            }
+
+            String[] campos = linha.split(",");
+
+            String partidaIdStr = campos[0].replace("\"", "");
+            String rodadaStr = campos[1].replace("\"", "");
+            String data = campos[2].replace("\"", "");
+            String hora = campos[3].replace("\"", "");
+            String mandante = campos[4].replace("\"", "");
+            String visitante = campos[5].replace("\"", "");
+            String formacaoMandante = campos[6].replace("\"", "");
+            String formacaoVisitante = campos[7].replace("\"", "");
+            String tecnicoMandante = campos[8].replace("\"", "");
+            String tecnicoVisitante = campos[9].replace("\"", "");
+            String vencedor = campos[10].replace("\"", "");
+            String arena = campos[11].replace("\"", "");
+            Integer mandantePlacar = Integer.valueOf(campos[12].replace("\"", ""));
+            Integer visitantePlacar = Integer.valueOf(campos[13].replace("\"", ""));
+            String mandanteEstado = campos[14].replace("\"", "");
+            String visitanteEstado = campos[15].replace("\"", "");
+
+            Integer partidaId = Integer.parseInt(partidaIdStr);
+            Integer rodada = Integer.parseInt(rodadaStr);
+
+            if (ano.equals(data.substring(0, 4))) {
+                String time = vencedor;
+                if (qtdVitorias.containsKey(time)) {
+                    qtdVitorias.put(time, qtdVitorias.get(time) + 1);
+                } else {
+                    qtdVitorias.put(time, 1);
+                }
             }
         }
     }
-    System.out.println("A partida com mais gols foi: " + partidaMaxGols);
-}
 
+    private static void varrerArquivoCSVFull(Map<String, Integer> qtdGols) throws IOException {
+        List<String> linhasCSV = LeitorArquivo.lerArquivoCSVFull();
+        boolean ignorarCabecalho = true;
 
+        for (String linha : linhasCSV) {
 
-    public static void varrerArquivoCSVCartoes(Map<String, Integer> qtdCartoes, String cor) throws IOException {
+            if (ignorarCabecalho) {
+                ignorarCabecalho = false;
+                continue;
+            }
+
+            String[] campos = linha.split(",");
+
+            String partidaIdStr = campos[0].replace("\"", "");
+            String rodadaStr = campos[1].replace("\"", "");
+            String data = campos[2].replace("\"", "");
+            String hora = campos[3].replace("\"", "");
+            String mandante = campos[4].replace("\"", "");
+            String visitante = campos[5].replace("\"", "");
+            String formacaoMandante = campos[6].replace("\"", "");
+            String formacaoVisitante = campos[7].replace("\"", "");
+            String tecnicoMandante = campos[8].replace("\"", "");
+            String tecnicoVisitante = campos[9].replace("\"", "");
+            String vencedor = campos[10].replace("\"", "");
+            String arena = campos[11].replace("\"", "");
+            Integer mandantePlacar = Integer.valueOf(campos[12].replace("\"", ""));
+            Integer visitantePlacar = Integer.valueOf(campos[13].replace("\"", ""));
+            String mandanteEstado = campos[14].replace("\"", "");
+            String visitanteEstado = campos[15].replace("\"", "");
+
+            Integer partidaId = Integer.parseInt(partidaIdStr);
+            Integer rodada = Integer.parseInt(rodadaStr);
+
+            Integer placarTotal = mandantePlacar + visitantePlacar;
+
+            String placarFormatado = mandantePlacar + " x " + visitantePlacar;
+
+            Partida partida = new Partida(partidaId, placarTotal);
+
+            qtdGols.put(placarFormatado, placarTotal);
+        }
+    }
+
+    private static void varrerArquivoCSVCartoes(Map<String, Integer> qtdCartoes, String cor) throws IOException {
         List<String> linhasCSV = LeitorArquivo.lerArquivoCSVCartoes();
         boolean ignorarCabecalho = true;
 
@@ -104,7 +169,7 @@ public static void imprimirPartidaComMaiorPlacar() throws IOException {
         }
     }
 
-    public static void varrerArquivoCSVGols(Map<String, Integer> qtdGols, String tipo) throws IOException {
+    private static void varrerArquivoCSVGols(Map<String, Integer> qtdGols, String tipo) throws IOException {
         List<String> linhasCSV = LeitorArquivo.lerArquivoCSVGols();
         boolean ignorarCabecalho = true;
 
@@ -141,52 +206,6 @@ public static void imprimirPartidaComMaiorPlacar() throws IOException {
             } else if (tipo.equals("Gol Contra")) {
                 if (jogador.getTipoGol().equals(tipo)) {
                     qtdGols.put(jogador.getNome(), qtdGols.getOrDefault(jogador.getNome(), 0) + 1);
-                }
-            }
-        }
-    }
-
-//            ************************************************
-    public static void varrerArquivoCSVFull(Map<String, Integer> qtdGolsPorPartida) throws IOException {
-        List<String> linhasCSV = LeitorArquivo.lerArquivoCSVFull();
-        boolean ignorarCabecalho = true;
-        int maxGols = 0;
-        String partidaMaxGols = "";
-
-        for (String linha : linhasCSV) {
-
-            if (ignorarCabecalho) {
-                ignorarCabecalho = false;
-                continue;
-            }
-
-            String[] campos = linha.split(",");
-
-            String formacaoMandante = campos[0].replace("\"", "");
-            String formacaoVisitante = campos[1].replace("\"", "");
-            String tecnicoMandante = campos[2].replace("\"", "");
-            String tecnicoVisitante = campos[3].replace("\"", "");
-            String vencedor = campos[4].replace("\"", "");
-            String arena = campos[5].replace("\"", "");
-
-            Integer mandantePlacar = 0;
-            if (!campos[6].replace("\"", "").isEmpty() && campos[6].replace("\"", "").matches("\\d+")) {
-                mandantePlacar = Integer.parseInt(campos[6].replace("\"", ""));
-            }
-
-            Integer visitantePlacar = 0;
-            if (!campos[7].replace("\"", "").isEmpty() && campos[7].replace("\"", "").matches("\\d+")) {
-                visitantePlacar = Integer.parseInt(campos[7].replace("\"", ""));
-            }
-
-            String mandanteEstado = campos[8].replace("\"", "");
-            String visitanteEstado = campos[9].replace("\"", "");
-
-            if (mandantePlacar != null && visitantePlacar != null) {
-                Integer totalGols = mandantePlacar + visitantePlacar;
-                if (totalGols > maxGols) {
-                    maxGols = totalGols;
-                    partidaMaxGols = linha;
                 }
             }
         }

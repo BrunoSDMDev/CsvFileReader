@@ -10,13 +10,7 @@ import java.util.*;
 /*
 
 Falta realizar a consulta e a impressão dos atributos:
-O Estado que teve menos jogos dentro do período 2003 e 2022
-O placar da partida com mais gols.
-
-Falta realizar a consulta:
-O jogador que mais fez gols
-O jogador que mais fez gols de pênaltis
-O jogador que mais fez gols contra;
+O Estado que teve menos jogos dentro do período 2003 e 2022;
 
  */
 public class Terminal {
@@ -27,13 +21,8 @@ public class Terminal {
         Impressora.imprimirJogadorMaisGolTipo("");
         Impressora.imprimirJogadorMaisGolTipo("Penalty");
         Impressora.imprimirJogadorMaisGolTipo("Gol Contra");
-        Impressora.imprimirPartidaComMaiorPlacar();
-    }
-
-
-
-    public static void imprimirTimeMaisVitoriaAno(){
-
+        Impressora.imprimirPlacarPartidaComMaisGols();
+        Impressora.imprimirTimeMaisVitoriaAno("2008");
     }
 
     public static void imprimirEstadoMenosVitoriaIntervaloAno() throws IOException {

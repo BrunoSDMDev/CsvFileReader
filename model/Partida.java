@@ -6,6 +6,7 @@ import java.time.LocalTime;
 public class Partida {
     private Integer id;
     private Integer rodada;
+    private Integer qtdGolTotal;
     private String clube;
     private String cartao;
     private Jogador jogador;
@@ -20,6 +21,11 @@ public class Partida {
         this.cartao = cartao;
         this.jogador = jogador;
         this.minuto = minuto;
+    }
+
+    public Partida(Integer id, Integer qtdGolTotal) {
+        this.id = id;
+        this.qtdGolTotal = qtdGolTotal;
     }
 
     public Partida(Integer id, Integer rodada, String clube, Jogador jogador, String minuto) {
@@ -60,5 +66,9 @@ public class Partida {
 
     public LocalTime getHora() {
         return hora;
+    }
+
+    public Integer getQtdGolTotal() {
+        return qtdGolTotal;
     }
 }
