@@ -27,6 +27,50 @@ public class Impressora {
         System.out.println("Jogador com mais gols " + tipo + ": " + jogadorMaisGols.getKey());
     }
 
+//       ****************************************
+public static void imprimirPartidaComMaiorPlacar() throws IOException {
+    List<String> linhasCSV = LeitorArquivo.lerArquivoCSVFull();
+    Map<String, Integer> qtdGolsPorPartida = new HashMap<>();
+    varrerArquivoCSVFull(qtdGolsPorPartida);
+
+    Map.Entry<String, Integer> partidaComMaisGols = null;
+
+    boolean ignorarCabecalho = true;
+    int maxGols = 0;
+    String partidaMaxGols = "";
+
+    for (String linha : linhasCSV) {
+
+        if (ignorarCabecalho) {
+            ignorarCabecalho = false;
+            continue;
+        }
+
+        String[] campos = linha.split(",");
+
+        Integer mandantePlacar = 0;
+        if (!campos[6].replace("\"", "").isEmpty() && campos[6].replace("\"", "").matches("\\d+")) {
+            mandantePlacar = Integer.parseInt(campos[6].replace("\"", ""));
+        }
+
+        Integer visitantePlacar = 0;
+        if (!campos[7].replace("\"", "").isEmpty() && campos[7].replace("\"", "").matches("\\d+")) {
+            visitantePlacar = Integer.parseInt(campos[7].replace("\"", ""));
+        }
+
+        if (mandantePlacar != null && visitantePlacar != null) {
+            Integer totalGols = mandantePlacar + visitantePlacar;
+            if (totalGols > maxGols) {
+                maxGols = totalGols;
+                partidaMaxGols = linha;
+            }
+        }
+    }
+    System.out.println("A partida com mais gols foi: " + partidaMaxGols);
+}
+
+
+
     public static void varrerArquivoCSVCartoes(Map<String, Integer> qtdCartoes, String cor) throws IOException {
         List<String> linhasCSV = LeitorArquivo.lerArquivoCSVCartoes();
         boolean ignorarCabecalho = true;
@@ -97,6 +141,52 @@ public class Impressora {
             } else if (tipo.equals("Gol Contra")) {
                 if (jogador.getTipoGol().equals(tipo)) {
                     qtdGols.put(jogador.getNome(), qtdGols.getOrDefault(jogador.getNome(), 0) + 1);
+                }
+            }
+        }
+    }
+
+//            ************************************************
+    public static void varrerArquivoCSVFull(Map<String, Integer> qtdGolsPorPartida) throws IOException {
+        List<String> linhasCSV = LeitorArquivo.lerArquivoCSVFull();
+        boolean ignorarCabecalho = true;
+        int maxGols = 0;
+        String partidaMaxGols = "";
+
+        for (String linha : linhasCSV) {
+
+            if (ignorarCabecalho) {
+                ignorarCabecalho = false;
+                continue;
+            }
+
+            String[] campos = linha.split(",");
+
+            String formacaoMandante = campos[0].replace("\"", "");
+            String formacaoVisitante = campos[1].replace("\"", "");
+            String tecnicoMandante = campos[2].replace("\"", "");
+            String tecnicoVisitante = campos[3].replace("\"", "");
+            String vencedor = campos[4].replace("\"", "");
+            String arena = campos[5].replace("\"", "");
+
+            Integer mandantePlacar = 0;
+            if (!campos[6].replace("\"", "").isEmpty() && campos[6].replace("\"", "").matches("\\d+")) {
+                mandantePlacar = Integer.parseInt(campos[6].replace("\"", ""));
+            }
+
+            Integer visitantePlacar = 0;
+            if (!campos[7].replace("\"", "").isEmpty() && campos[7].replace("\"", "").matches("\\d+")) {
+                visitantePlacar = Integer.parseInt(campos[7].replace("\"", ""));
+            }
+
+            String mandanteEstado = campos[8].replace("\"", "");
+            String visitanteEstado = campos[9].replace("\"", "");
+
+            if (mandantePlacar != null && visitantePlacar != null) {
+                Integer totalGols = mandantePlacar + visitantePlacar;
+                if (totalGols > maxGols) {
+                    maxGols = totalGols;
+                    partidaMaxGols = linha;
                 }
             }
         }

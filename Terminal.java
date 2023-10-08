@@ -1,6 +1,7 @@
 import javaNIO.LeitorArquivo;
 import model.Jogador;
 import model.Partida;
+import model.Time;
 import utils.Impressora;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class Terminal {
         Impressora.imprimirJogadorMaisGolTipo("");
         Impressora.imprimirJogadorMaisGolTipo("Penalty");
         Impressora.imprimirJogadorMaisGolTipo("Gol Contra");
+        Impressora.imprimirPartidaComMaiorPlacar();
     }
 
 
