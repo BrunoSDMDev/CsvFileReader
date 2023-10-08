@@ -1,6 +1,7 @@
 package model;
 
 public enum TipoGol {
+    GOL(""),
     PENALTY("Penalty"),
     GOLCONTRA("Gol Contra");
 

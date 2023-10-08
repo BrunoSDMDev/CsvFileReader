@@ -8,6 +8,8 @@ public class Jogador {
     private String numeroCamisa;
     private int qtdCartaoAmarelo;
     private int qtdCartaoVermelho;
+    private int qtdGols;
+    private String tipoGol;
 
     public Jogador() {
     }
@@ -16,6 +18,11 @@ public class Jogador {
         this.nome = nome;
         this.posicao = posicao;
         this.numeroCamisa = numeroCamisa;
+    }
+
+    public Jogador(String nome, String tipoGol) {
+        this.nome = nome;
+        this.tipoGol = tipoGol;
     }
 
     public String getNome() {
@@ -38,6 +45,18 @@ public class Jogador {
         return qtdCartaoVermelho;
     }
 
+    public int getQtdGols() {
+        return qtdGols;
+    }
+
+    public String getTipoGol() {
+        return tipoGol;
+    }
+
+    public void setQtdCartaoVermelho(int qtdCartaoVermelho) {
+        this.qtdCartaoVermelho = qtdCartaoVermelho;
+    }
+
     public void incrementarCartoesAmarelos() {
         qtdCartaoAmarelo++;
     }
@@ -45,16 +64,7 @@ public class Jogador {
         qtdCartaoVermelho++;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Jogador jogador = (Jogador) o;
-        return qtdCartaoAmarelo == jogador.qtdCartaoAmarelo && qtdCartaoVermelho == jogador.qtdCartaoVermelho && Objects.equals(nome, jogador.nome) && Objects.equals(posicao, jogador.posicao) && Objects.equals(numeroCamisa, jogador.numeroCamisa);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(nome, posicao, numeroCamisa, qtdCartaoAmarelo, qtdCartaoVermelho);
+    public void incrementarGol() {
+        qtdGols++;
     }
 }
