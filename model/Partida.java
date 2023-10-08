@@ -1,6 +1,7 @@
 package model;
 
-import java.util.Objects;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Partida {
     private Integer id;
@@ -8,14 +9,23 @@ public class Partida {
     private String clube;
     private String cartao;
     private Jogador jogador;
+    private LocalDate data;
+    private LocalTime hora;
     private String minuto;
-    private int gols;
 
     public Partida(Integer id, Integer rodada, String clube, String cartao, Jogador jogador, String minuto) {
         this.id = id;
         this.rodada = rodada;
         this.clube = clube;
         this.cartao = cartao;
+        this.jogador = jogador;
+        this.minuto = minuto;
+    }
+
+    public Partida(Integer id, Integer rodada, String clube, Jogador jogador, String minuto) {
+        this.id = id;
+        this.rodada = rodada;
+        this.clube = clube;
         this.jogador = jogador;
         this.minuto = minuto;
     }
@@ -44,7 +54,11 @@ public class Partida {
         return minuto;
     }
 
-    public int getGols() {
-        return gols;
+    public LocalDate getData() {
+        return data;
+    }
+
+    public LocalTime getHora() {
+        return hora;
     }
 }

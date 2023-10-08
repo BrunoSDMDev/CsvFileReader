@@ -6,8 +6,6 @@ import java.time.LocalTime;
 public class DetalhesPartida {
     private Integer id;
     private Integer rodada;
-    private LocalDate data;
-    private LocalTime hora;
     private Time mandante;
     private Time visitante;
     private String formacaoMandante;
@@ -21,11 +19,9 @@ public class DetalhesPartida {
     private String mandanteEstado;
     private String visitanteEstado;
 
-    public DetalhesPartida(Integer id, Integer rodada, LocalDate data, LocalTime hora, Time mandante, Time visitante, String formacaoMandante, String formacaoVisitante, String tecnicoMandante, String tecnicoVisitante, String vencedor, String arena, Integer mandantePlacar, Integer visitantePlacar, String mandanteEstado, String visitanteEstado) {
+    public DetalhesPartida(Integer id, Integer rodada, Time mandante, Time visitante, String formacaoMandante, String formacaoVisitante, String tecnicoMandante, String tecnicoVisitante, String vencedor, String arena, Integer mandantePlacar, Integer visitantePlacar, String mandanteEstado, String visitanteEstado) {
         this.id = id;
         this.rodada = rodada;
-        this.data = data;
-        this.hora = hora;
         this.mandante = mandante;
         this.visitante = visitante;
         this.formacaoMandante = formacaoMandante;
@@ -46,14 +42,6 @@ public class DetalhesPartida {
 
     public Integer getRodada() {
         return rodada;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public LocalTime getHora() {
-        return hora;
     }
 
     public Time getMandante() {
