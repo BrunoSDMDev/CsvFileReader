@@ -11,13 +11,13 @@ import java.util.List;
 public class LeitorArquivo {
 
     public static final String CAMINHO_ARQUIVO_CARTOES =
-            "C:/Program Files/Projetos/CsvFileReader/CSVFiles/campeonato-brasileiro-cartoes";
+            "CSVFiles/campeonato-brasileiro-cartoes";
     public static final String CAMINHO_ARQUIVO_GOLS =
-            "C:/Program Files/Projetos/CsvFileReader/CSVFiles/campeonato-brasileiro-gols";
+            "CSVFiles/campeonato-brasileiro-gols";
     public static final String CAMINHO_ARQUIVO_ESTATISTICAS_FULL =
-            "C:/Program Files/Projetos/CsvFileReader/CSVFiles/campeonato-brasileiro-estatisticas-full";
+            "CSVFiles/campeonato-brasileiro-estatisticas-full";
     public static final String CAMINHO_ARQUIVO_FULL =
-            "C:/Program Files/Projetos/CsvFileReader/CSVFiles/campeonato-brasileiro-gols";
+            "CSVFiles/campeonato-brasileiro-full";
     public static final String EXTENSAO_CSV = ".csv";
 
     public static List<String> lerArquivoCSVCartoes() throws IOException {
