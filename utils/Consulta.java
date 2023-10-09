@@ -53,15 +53,10 @@ public class Consulta {
             Integer partidaId = Integer.parseInt(partidaIdStr);
             Integer rodada = Integer.parseInt(rodadaStr);
 
-            Integer placarTotal = mandantePlacar + visitantePlacar;
-
-            String placarFormatado = mandantePlacar + " x " + visitantePlacar;
-
-            Partida partida = new Partida(partidaId, placarTotal);
-
-            qtdGols.put(placarFormatado, placarTotal);
+            consultaPlacarPartidas(qtdGols, mandantePlacar, visitantePlacar, partidaId);
         }
     }
+
 
     public static void inspecionarArquivoCSVCartoes(Map<String, Integer> qtdCartoes, String cor) throws IOException {
         List<String> linhasCSV = LeitorArquivo.lerArquivoCSVCartoes();
@@ -138,7 +133,63 @@ public class Consulta {
         }
     }
 
+    private static void consultaPlacarPartidas(Map<String, Integer> qtdGols, Integer mandantePlacar, Integer visitantePlacar, Integer partidaId) {
+        Integer placarTotal = mandantePlacar + visitantePlacar;
+
+        String placarFormatado = mandantePlacar + " x " + visitantePlacar;
+
+        Partida partida = new Partida(partidaId, placarTotal);
+
+        qtdGols.put(placarFormatado, placarTotal);
+    }
+
 }
+
+//             **** BACKUP inspecionarArquivoCSVFull
+
+//  public static void inspecionarArquivoCSVFull(Map<String, Integer> qtdGols) throws IOException {
+//        List<String> linhasCSV = LeitorArquivo.lerArquivoCSVFull();
+//        boolean ignorarCabecalho = true;
+//
+//        for (String linha : linhasCSV) {
+//
+//            if (ignorarCabecalho) {
+//                ignorarCabecalho = false;
+//                continue;
+//            }
+//
+//            String[] campos = linha.split(",");
+//
+//            String partidaIdStr = campos[0].replace("\"", "");
+//            String rodadaStr = campos[1].replace("\"", "");
+//            String data = campos[2].replace("\"", "");
+//            String hora = campos[3].replace("\"", "");
+//            String mandante = campos[4].replace("\"", "");
+//            String visitante = campos[5].replace("\"", "");
+//            String formacaoMandante = campos[6].replace("\"", "");
+//            String formacaoVisitante = campos[7].replace("\"", "");
+//            String tecnicoMandante = campos[8].replace("\"", "");
+//            String tecnicoVisitante = campos[9].replace("\"", "");
+//            String vencedor = campos[10].replace("\"", "");
+//            String arena = campos[11].replace("\"", "");
+//            Integer mandantePlacar = Integer.valueOf(campos[12].replace("\"", ""));
+//            Integer visitantePlacar = Integer.valueOf(campos[13].replace("\"", ""));
+//            String mandanteEstado = campos[14].replace("\"", "");
+//            String visitanteEstado = campos[15].replace("\"", "");
+//
+//            Integer partidaId = Integer.parseInt(partidaIdStr);
+//            Integer rodada = Integer.parseInt(rodadaStr);
+//
+//            Integer placarTotal = mandantePlacar + visitantePlacar;
+//
+//            String placarFormatado = mandantePlacar + " x " + visitantePlacar;
+//
+//            Partida partida = new Partida(partidaId, placarTotal);
+//
+//            qtdGols.put(placarFormatado, placarTotal);
+//        }
+//    }
+
 
 
 //                  ------- o que ainda precisa ser criado -----
