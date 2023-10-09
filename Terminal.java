@@ -22,7 +22,7 @@ public class Terminal {
         Impressora.imprimirJogadorMaisGolTipo("Penalty");
         Impressora.imprimirJogadorMaisGolTipo("Gol Contra");
         Impressora.imprimirPlacarPartidaComMaisGols();
-        Impressora.imprimirTimeMaisVitoriaAno("2008");
+//        Impressora.imprimirTimeMaisVitoriaAno("2008");
     }
 
     public static void imprimirEstadoMenosVitoriaIntervaloAno() throws IOException {
