@@ -5,10 +5,10 @@ import model.Jogador;
 import model.Partida;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Impressora {
+
     public static void imprimirJogadorMaisCartaoCor(String cor) throws IOException {
         Map<String, Integer> qtdCartoes = new HashMap<>();
         varrerArquivoCSVCartoes(qtdCartoes, cor);
@@ -39,17 +39,19 @@ public class Impressora {
         System.out.println("Placar da partida com mais gols " + partidaMaisGols.getKey());
     }
 
+    //
     public static void imprimirTimeMaisVitoriaAno(String ano) throws IOException {
-        Map<String, Integer> qtdVitorias = new HashMap<>();
-        varrerArquivoCSVFull2(qtdVitorias, ano);
+        List<String> vencedores = new ArrayList<>();
+        varrerArquivoCSVFull2(vencedores);
 
-        Map.Entry<String, Integer> timeMaisVitoria = Collections.max(qtdVitorias.entrySet(),
-                Comparator.comparingInt(Map.Entry::getValue));
+        Optional<String> timeMaisVitoria = vencedores.stream()
+                .max(Comparator.comparingInt(v -> Collections.frequency(vencedores, v)));
 
-        System.out.println("Time com mais vitórias em " + ano + " " + timeMaisVitoria.getKey());
+        System.out.println("Time com mais vitórias em " + ano + " " + timeMaisVitoria.get());
     }
 
-    private static void varrerArquivoCSVFull2(Map<String, Integer> qtdVitorias, String ano) throws IOException {
+    //
+    private static void varrerArquivoCSVFull2(List<String> vencedores) throws IOException {
         List<String> linhasCSV = LeitorArquivo.lerArquivoCSVFull();
         boolean ignorarCabecalho = true;
 
@@ -83,12 +85,7 @@ public class Impressora {
             Integer rodada = Integer.parseInt(rodadaStr);
 
             if (ano.equals(data.substring(0, 4))) {
-                String time = vencedor;
-                if (qtdVitorias.containsKey(time)) {
-                    qtdVitorias.put(time, qtdVitorias.get(time) + 1);
-                } else {
-                    qtdVitorias.put(time, 1);
-                }
+                vencedores.add(vencedor);
             }
         }
     }
